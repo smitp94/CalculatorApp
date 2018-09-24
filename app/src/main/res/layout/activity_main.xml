@@ -148,7 +148,7 @@
         android:layout_height="80dp"
         android:layout_below="@+id/button4"
         android:layout_toEndOf="@+id/button3"
-        android:text="X"
+        android:text="x"
         android:onClick="onClickBtn"/>
 
     <Button
@@ -167,6 +167,15 @@
         android:layout_below="@+id/button7"
         android:layout_toEndOf="@+id/button2"
         android:text="CC"
+        android:onClick="onClickBtn"/>
+
+    <Button
+        android:id="@+id/buttoneq"
+        android:layout_width="54dp"
+        android:layout_height="161dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/button4"
+        android:text="="
         android:onClick="onClickBtn"/>
 
 </RelativeLayout>
