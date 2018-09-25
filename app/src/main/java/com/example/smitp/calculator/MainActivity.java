@@ -9,30 +9,25 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
-    private String[] calcStack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-    public void setResult(String str){
+    public void setResult(String input){
         result = (TextView) findViewById(R.id.result);
-        String operation = "";
-//        String answer = "";
-        if(str.compareTo("CC") == 0){
+        String operation = result.getText().toString();;
+        if(input.compareTo("CC") == 0){
             operation = "";
         }
-        else if (str.compareTo("=") == 0){
+        else if (operation.length() > 2 && input.compareTo("=") == 0){
 
-            //perform operation
-            operation = result.getText().toString();
-            Toast.makeText(this, operation, Toast.LENGTH_LONG).show();
             String[] array = operation.split(" ");
-            Toast.makeText(this, array[1], Toast.LENGTH_LONG).show();
-            double op1 = Double.parseDouble(array[1]);
-            String op = (String) array[2];
-            double op2 =  Double.parseDouble(array[3]);
+            double op1 = Double.parseDouble(array[0]);
+            String op = (String) array[1];
+            double op2 =  Double.parseDouble(array[2]);
 
             if(op.compareTo("+") == 0){
                 operation = (op1 + op2) + "";
@@ -48,24 +43,32 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        else if(operation.length() == 0 && input.matches("[+,\\-,x,/,=]")){
+            Toast.makeText(this, "Input number first", Toast.LENGTH_LONG).show();
+            operation = "";
+        }
         else{
             operation = result.getText().toString();
-            Toast.makeText(this, operation, Toast.LENGTH_LONG).show();
-            operation = operation.concat(" ").concat(str);
+            if(operation.length() > 0 && (input.matches("[+,\\-,x,/]") || operation.substring(operation.length() - 1).matches("[+,\\-,x,/]"))) {
+                operation = operation.concat(" ").concat(input);
+            }
+            else{
+                operation = operation.concat(input);
+            }
         }
         result.setText(operation);
-
-//        Toast.makeText(this, operation, Toast.LENGTH_LONG).show();
-
-        //enforce constraints
-
+    //Add constraints
+        /*
+        1. .......
+        2. + - x
+        3. -1 + 4
+         */
     }
 
     public void onClickBtn(View v)
     {
         Button b = (Button)v;
         String buttonText = b.getText().toString();
-        Toast.makeText(this, "Clicked on Button " + buttonText, Toast.LENGTH_LONG).show();
         setResult(buttonText);
     }
 
